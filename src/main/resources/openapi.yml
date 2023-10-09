@@ -1,0 +1,413 @@
+openapi: 3.0.3
+info:
+  title: Swagger Planning Poker - OpenAPI 3.0
+  description: |-
+    Planning Poker fpr Capgmenini Challange
+  version: 1.0.11
+tags:
+  - name: session
+    description: Everything about planning session
+  - name: user
+    description: Operations about user
+  - name: user-stories
+    description: Operations about user stories
+  - name: decks
+    description: Operations about decks
+paths:
+  /session:
+    post:
+      tags:
+        - session
+      summary: Add a new session
+      description: Add a new session
+      operationId: addSession
+      requestBody:
+        description: Create a new session
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '405':
+          description: Invalid input
+  /session/{sessionId}:
+    get:
+      tags:
+        - session
+      summary: Find session by ID
+      description: Returns a single session
+      operationId: getSessionById
+      parameters:
+        - name: sessionId
+          in: path
+          description: ID of session to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: session not found
+    put:
+      tags:
+        - session
+      summary: Update an existing session
+      description: Update an existing session by Id
+      operationId: updateSession
+      parameters:
+        - name: sessionId
+          in: path
+          description: ID of session to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update an existent session
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: session not found
+        '405':
+          description: Validation exception
+    delete:
+      tags:
+        - session
+      summary: Deletes a session
+      description: delete a session
+      operationId: deleteSession
+      parameters:
+        - name: sessionId
+          in: path
+          description: session id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid session value
+  /session/{sessionId}/user:
+    post:
+      tags:
+        - session
+      summary: Add an user to the session
+      description: Add an user to the session
+      operationId: uploadSessionUser
+      parameters:
+        - name: sessionId
+          in: path
+          description: ID of session to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+  /session/{sessionId}/userStory/{userStoryId}:
+    post:
+      tags:
+        - session
+      summary: add a user story to the session
+      description: ''
+      operationId: uploadSessionUserStory
+      parameters:
+        - name: sessionId
+          in: path
+          description: ID of session to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: userStoryId
+          in: path
+          description: ID of user story to update into a given session
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+    delete:
+      tags:
+        - session
+      summary: Deletes user stroy from a session
+      description: delete user stroy from a session
+      operationId: deleteUserStorySession
+      parameters:
+        - name: sessionId
+          in: path
+          description: session id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: userStoryId
+          in: path
+          description: ID of user story to update into a given session
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid session value
+  /userStory:
+    get:
+      tags:
+        - user-stories
+      summary: Returns all user stories
+      description: Returns all user stories
+      operationId: getUserStories
+      parameters:
+        - name: status
+          in: query
+          description: status of the user story
+          required: false
+          schema:
+            type: string
+            enum:
+              - PENDING
+              - VOTING
+              - VOTED
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStories'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Decks not found
+  /userStory/{userStoryId}:
+    get:
+      tags:
+        - user-stories
+      summary: Returns user stories by id
+      description: Returns user stories by id
+      operationId: getUserStory
+      parameters:
+        - name: userStoryId
+          in: path
+          description: ID of an user story
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStory'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Decks not found
+    patch:
+      tags:
+        - user-stories
+      summary: Update user story status
+      description: Update user story status
+      operationId: patchUserStoryStatus
+      parameters:
+        - name: userStoryId
+          in: path
+          description: ID of an user story
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserStoryStatusEnum'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStory'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Decks not found
+  /user:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+  /deckFormat:
+    get:
+      tags:
+        - decks
+      summary: Returns all deck formats
+      description: Returns all deck formats
+      operationId: getDeckFormats
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeckFormats'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Decks not found
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        nickname:
+          type: string
+    Session:
+      type: object
+      properties:
+        sessionId:
+          type: integer
+          format: int64
+        title:
+          type: string
+        deckFormatId:
+          type: integer
+          format: int64
+        userStories:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserStory'
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    DeckFormats:
+      type: array
+      items:
+        $ref: '#/components/schemas/DeckFormat'
+    DeckFormat:
+      type: object
+      properties:
+        deckFormatId:
+          type: integer
+          format: int64
+        name:
+          type: string
+    UserStories:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserStory'
+    UserStory:
+      type: object
+      properties:
+        userStoryId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        storyPoints:
+          type: integer
+          format: int64
+        status:
+          type: string
+          enum:
+            - PENDING
+            - VOTING
+            - VOTED
+    UserStoryStatusEnum:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - PENDING
+            - VOTING
+            - VOTED
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
