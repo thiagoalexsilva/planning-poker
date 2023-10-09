@@ -1,6 +1,7 @@
 package capgemini.challenge.api.service;
 
 import capgemini.api.openapi.dto.User;
+import capgemini.challenge.api.exception.PlanningPokerException;
 import capgemini.challenge.api.mapper.MapStructMapper;
 import capgemini.challenge.api.model.UserEntity;
 import capgemini.challenge.api.model.UserStoryEntity;
@@ -38,9 +39,9 @@ class UserServiceTest {
     @Test
     void getUserById_UserNotExists_ThrowsException() {
 
-        Mockito.when(this.userRepository.findById(Mockito.anyLong())).thenReturn(null);
+        Mockito.when(this.userRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(RuntimeException.class, () -> this.userService.getUserById(1L));
+        Assertions.assertThrows(PlanningPokerException.class, () -> this.userService.getUserById(1L));
     }
 
     @Test

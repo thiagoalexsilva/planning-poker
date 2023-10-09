@@ -3,6 +3,7 @@ package capgemini.challenge.api.service;
 import capgemini.api.openapi.dto.Session;
 import capgemini.api.openapi.dto.User;
 import capgemini.api.openapi.dto.UserStory;
+import capgemini.challenge.api.exception.PlanningPokerException;
 import capgemini.challenge.api.mapper.MapStructMapper;
 import capgemini.challenge.api.model.SessionEntity;
 import capgemini.challenge.api.repository.ISessionRepository;
@@ -45,9 +46,9 @@ class SessionServiceTest {
 
     @Test
     void getSessionById_NotExists_ThrowsException(){
-        Mockito.when(this.sessionRepository.findById(Mockito.anyLong())).thenReturn(null);
+        Mockito.when(this.sessionRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(RuntimeException.class, () -> this.sessionService.getSessionById(1L));
+        Assertions.assertThrows(PlanningPokerException.class, () -> this.sessionService.getSessionById(1L));
     }
 
     @Test
@@ -76,7 +77,7 @@ class SessionServiceTest {
 
         Mockito.when(this.sessionRepository.existsById(Mockito.anyLong())).thenReturn(false);
 
-        Assertions.assertThrows(RuntimeException.class, () -> this.sessionService.updateSession(1L, sessionMock));
+        Assertions.assertThrows(PlanningPokerException.class, () -> this.sessionService.updateSession(1L, sessionMock));
     }
 
     @Test
@@ -123,7 +124,7 @@ class SessionServiceTest {
         Mockito.when(this.sessionRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(new SessionEntity()));
         Mockito.doReturn(sessionMock).when(spyTemp).getSessionById(Mockito.anyLong());
 
-        Assertions.assertThrows(NotFoundException.class, () -> spyTemp.deleteUserStorySession(1L, 1L));
+        Assertions.assertThrows(PlanningPokerException.class, () -> spyTemp.deleteUserStorySession(1L, 1L));
     }
 
     @Test
@@ -134,7 +135,7 @@ class SessionServiceTest {
         Mockito.doReturn(sessionMock).when(spyTemp).getSessionById(Mockito.anyLong());
         Mockito.when(this.userStoryService.getUserStoryById(Mockito.anyLong())).thenReturn(null);
 
-        Assertions.assertThrows(NotFoundException.class, () -> spyTemp.uploadSessionUserStory(1L, 1L));
+        Assertions.assertThrows(PlanningPokerException.class, () -> spyTemp.uploadSessionUserStory(1L, 1L));
     }
 
     @Test
@@ -147,7 +148,7 @@ class SessionServiceTest {
         Mockito.doReturn(sessionMock).when(spyTemp).getSessionById(Mockito.anyLong());
         Mockito.when(this.userStoryService.getUserStoryById(Mockito.anyLong())).thenReturn(userStory);
 
-        Assertions.assertThrows(RuntimeException.class, () -> spyTemp.uploadSessionUserStory(1L, 1L));
+        Assertions.assertThrows(PlanningPokerException.class, () -> spyTemp.uploadSessionUserStory(1L, 1L));
     }
 
     @Test
@@ -180,7 +181,7 @@ class SessionServiceTest {
 
         Mockito.doReturn(sessionMock).when(spyTemp).getSessionById(Mockito.anyLong());
 
-        Assertions.assertThrows(RuntimeException.class, () -> this.sessionService.uploadSessionUser(1L, user));
+        Assertions.assertThrows(PlanningPokerException.class, () -> this.sessionService.uploadSessionUser(1L, user));
     }
 
     @Test

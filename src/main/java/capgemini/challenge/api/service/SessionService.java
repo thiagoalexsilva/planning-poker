@@ -3,6 +3,7 @@ package capgemini.challenge.api.service;
 import capgemini.api.openapi.dto.Session;
 import capgemini.api.openapi.dto.User;
 import capgemini.api.openapi.dto.UserStory;
+import capgemini.challenge.api.exception.PlanningPokerException;
 import capgemini.challenge.api.mapper.MapStructMapper;
 import capgemini.challenge.api.model.SessionEntity;
 import capgemini.challenge.api.repository.ISessionRepository;
@@ -11,7 +12,6 @@ import capgemini.challenge.api.service.interfaces.IUserService;
 import capgemini.challenge.api.service.interfaces.IUserStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class SessionService implements ISessionService {
     @Override
     public Session getSessionById(Long sessionId) {
         SessionEntity sessionEntity = this.sessionRepository.findById(sessionId)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(PlanningPokerException::new);
         return this.mapper.sessionEntityToSession(sessionEntity);
     }
 
@@ -51,7 +51,7 @@ public class SessionService implements ISessionService {
     @Override
     public Session updateSession(Long sessionId, Session session) {
         if(!this.sessionRepository.existsById(sessionId)){
-            throw new RuntimeException("Session does not exists.");
+            throw new PlanningPokerException("Session does not exists.");
         }
 
         SessionEntity sessionEntity = this.mapper.sessionToSessionEntity(session);
@@ -69,7 +69,7 @@ public class SessionService implements ISessionService {
     public Session deleteUserStorySession(Long sessionId, Long userStoryId) {
         Session session = this.getSessionById(sessionId);
         if(!this.validateUserStoryExistsAtSession(session, userStoryId)){
-            throw new NotFoundException("user story not assigned to this session");
+            throw new PlanningPokerException("user story not assigned to this session");
         }
 
         UserStory userStoryById = this.userStoryService.getUserStoryById(userStoryId);
@@ -96,9 +96,9 @@ public class SessionService implements ISessionService {
         UserStory userStoryById = this.userStoryService.getUserStoryById(userStoryId);
 
         if(Objects.isNull(userStoryById)){
-            throw new NotFoundException("user story not exists");
+            throw new PlanningPokerException("user story not exists");
         } else if(this.validateUserStoryExistsAtSession(session, userStoryId)){
-            throw new RuntimeException("user story already added to this session.");
+            throw new PlanningPokerException("user story already added to this session.");
         }
 
         ArrayList<UserStory> userStoriesList = new ArrayList<>(session.getUserStories());
@@ -119,7 +119,7 @@ public class SessionService implements ISessionService {
                 .toList();
 
         if(!userPlayerList.isEmpty()){
-            throw new RuntimeException("user story already added to this session.");
+            throw new PlanningPokerException("user story already added to this session.");
         } else if(Objects.isNull(this.userService.getUserById(user.getUserId()))){
             user = this.userService.createUser(user);
         }

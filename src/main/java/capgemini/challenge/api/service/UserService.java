@@ -1,6 +1,7 @@
 package capgemini.challenge.api.service;
 
 import capgemini.api.openapi.dto.User;
+import capgemini.challenge.api.exception.PlanningPokerException;
 import capgemini.challenge.api.mapper.MapStructMapper;
 import capgemini.challenge.api.model.UserEntity;
 import capgemini.challenge.api.repository.IUserRepository;
@@ -23,7 +24,7 @@ public class UserService implements IUserService {
     @Override
     public User getUserById(Long id) {
         UserEntity userEntity = this.userRepository.findById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(PlanningPokerException::new);
         return this.mapper.userEntityToUser(userEntity);
     }
 

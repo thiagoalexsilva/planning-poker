@@ -9,6 +9,7 @@ import capgemini.challenge.api.model.SessionEntity;
 import capgemini.challenge.api.model.UserEntity;
 import capgemini.challenge.api.model.UserStoryEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MapStructMapper {
