@@ -5,7 +5,6 @@ import capgemini.challenge.api.exception.PlanningPokerException;
 import capgemini.challenge.api.mapper.MapStructMapper;
 import capgemini.challenge.api.model.UserStoryEntity;
 import capgemini.challenge.api.repository.IUserStoryRepository;
-import capgemini.challenge.api.service.UserStoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -94,6 +93,34 @@ class UserStoryServiceTest {
         Mockito.when(this.mapper.userStoryToUserStoryEntity(Mockito.any(UserStory.class))).thenReturn(userStoryEntity);
 
         final var response = this.userStoryService.patchUserStoryStatus(userStory, "VOTING");
+
+        Assertions.assertNotNull(response);
+    }
+
+    @Test
+    void addUserStory_USExists_ReturnsUS(){
+        final var userStoryEntity = new UserStoryEntity();
+        final var userStory = new UserStory();
+
+        Mockito.when(this.userStoryRepository.save(Mockito.any(UserStoryEntity.class))).thenReturn(userStoryEntity);
+        Mockito.when(this.mapper.userStoryEntityToUserStory(Mockito.any(UserStoryEntity.class))).thenReturn(userStory);
+        Mockito.when(this.mapper.userStoryToUserStoryEntity(Mockito.any(UserStory.class))).thenReturn(userStoryEntity);
+
+        final var response = this.userStoryService.addUserStory(userStory);
+
+        Assertions.assertNotNull(response);
+    }
+
+    @Test
+    void updateUserStory_USExists_ReturnsUS(){
+        final var userStoryEntity = new UserStoryEntity();
+        final var userStory = new UserStory();
+
+        Mockito.when(this.userStoryRepository.save(Mockito.any(UserStoryEntity.class))).thenReturn(userStoryEntity);
+        Mockito.when(this.mapper.userStoryEntityToUserStory(Mockito.any(UserStoryEntity.class))).thenReturn(userStory);
+        Mockito.when(this.mapper.userStoryToUserStoryEntity(Mockito.any(UserStory.class))).thenReturn(userStoryEntity);
+
+        final var response = this.userStoryService.updateUserStory(userStory);
 
         Assertions.assertNotNull(response);
     }

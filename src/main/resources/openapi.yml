@@ -142,7 +142,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Session'
   /session/{sessionId}/userStory/{userStoryId}:
-    post:
+    put:
       tags:
         - session
       summary: add a user story to the session
@@ -195,6 +195,24 @@ paths:
         '400':
           description: Invalid session value
   /userStory:
+    post:
+      tags:
+        - user-stories
+      summary: Add an user story
+      description: ''
+      operationId: addUserStory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserStory'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStory'
     get:
       tags:
         - user-stories
@@ -249,6 +267,32 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Decks not found
+    put:
+      tags:
+        - user-stories
+      summary: Update an user story
+      description: ''
+      operationId: updateUserStory
+      parameters:
+        - name: userStoryId
+          in: path
+          description: ID of an user story
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserStory'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStory'
     patch:
       tags:
         - user-stories

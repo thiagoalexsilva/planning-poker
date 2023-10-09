@@ -56,4 +56,16 @@ public class UserStoryService implements IUserStoryService {
         UserStoryEntity userStoryEntity = this.mapper.userStoryToUserStoryEntity(userStory);
         return this.mapper.userStoryEntityToUserStory(this.userStoryRepository.save(userStoryEntity));
     }
+
+    @Override
+    public UserStory addUserStory(UserStory userStory) {
+        UserStoryEntity userStoryEntity = this.mapper.userStoryToUserStoryEntity(userStory);
+        return this.mapper.userStoryEntityToUserStory(this.userStoryRepository.save(userStoryEntity));
+    }
+
+    @Override
+    public UserStory updateUserStory(UserStory userStory) {
+        UserStoryEntity userStoryEntity = this.mapper.userStoryToUserStoryEntity(userStory);
+        return this.mapper.userStoryEntityToUserStory(this.userStoryRepository.save(userStoryEntity));
+    }
 }

@@ -2,7 +2,6 @@ package capgemini.challenge.api.controller;
 
 import capgemini.api.openapi.dto.UserStory;
 import capgemini.api.openapi.dto.UserStoryStatusEnum;
-import capgemini.challenge.api.controller.UserStoryController;
 import capgemini.challenge.api.service.UserStoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static capgemini.api.openapi.dto.UserStoryStatusEnum.*;
+import static capgemini.api.openapi.dto.UserStoryStatusEnum.StatusEnum;
 
 @ExtendWith(SpringExtension.class)
 class UserStoryControllerTest {
@@ -79,6 +78,40 @@ class UserStoryControllerTest {
         Mockito.when(this.userStoryService.getUserStoryById(Mockito.anyLong())).thenReturn(null);
 
         final var response = this.userStoryController.patchUserStoryStatus(1L, Mockito.any(UserStoryStatusEnum.class));
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void addUserStory_USSaved_ReturnsUSCreated() {
+        final var us = new UserStory();
+
+        Mockito.when(this.userStoryService.addUserStory(Mockito.any(UserStory.class))).thenReturn(us);
+
+        final var response = this.userStoryController.addUserStory(us);
+
+        Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        Assertions.assertNotNull(response.getBody());
+    }
+
+    @Test
+    void updateUserStory_USExists_ReturnsUS() {
+        final var userStory = new UserStory().userStoryId(1L);
+
+        Mockito.when(this.userStoryService.getUserStoryById(Mockito.anyLong())).thenReturn(userStory);
+        Mockito.when(this.userStoryService.updateUserStory(Mockito.any(UserStory.class))).thenReturn(userStory);
+
+        final var response = this.userStoryController.updateUserStory(1L, userStory);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertNotNull(response.getBody());
+    }
+
+    @Test
+    void updateUserStory_USNotExists_ReturnsNotFound() {
+        Mockito.when(this.userStoryService.getUserStoryById(Mockito.anyLong())).thenReturn(null);
+
+        final var response = this.userStoryController.updateUserStory(1L, Mockito.any(UserStory.class));
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
