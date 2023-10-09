@@ -13,41 +13,41 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MapStructMapper {
-    //@Mapping(target = "userId", source = "userId")
-    //@Mapping(target = "name", source = "name")
-    //@Mapping(target = "nickname", source = "nickname")
+    @Mapping(target = "userId", source = "userId")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "nickname", source = "nickname")
     User userEntityToUser(UserEntity user);
 
-    //@Mapping(target = "userId", ignore = true)
-    //@Mapping(target = "name", source = "name")
-    //@Mapping(target = "nickname", source = "nickname")
+    @Mapping(target = "userId", ignore = true)
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "nickname", source = "nickname")
     UserEntity userToUserEntity(User user);
 
-    //@Mapping(target = "sessionId", source = "sessionId")
-    //@Mapping(target = "title", source = "title")
-    //@Mapping(target = "deckFormatId", source = "deckFormatId")
+    @Mapping(target = "sessionId", source = "sessionId")
+    @Mapping(target = "title", source = "title")
+    @Mapping(target = "deckFormatId", source = "deckFormatId")
     Session sessionEntityToSession(SessionEntity sessionEntity);
 
-    //@Mapping(target = "sessionId", ignore = true)
-    //@Mapping(target = "title", source = "title")
-    //@Mapping(target = "deckFormatId", source = "deckFormatId")
+    @Mapping(target = "sessionId", ignore = true)
+    @Mapping(target = "title", source = "title")
+    @Mapping(target = "deckFormatId", source = "deckFormatId")
     SessionEntity sessionToSessionEntity(Session session);
 
-    //@Mapping(target = "deckFormatId", source = "deckFormatId")
-    //@Mapping(target = "name", source = "name")
+    @Mapping(target = "deckFormatId", source = "deckFormatId")
+    @Mapping(target = "name", source = "name")
     DeckFormat deckFormatEntityToDeckFormat(DeckFormatEntity deckFormatEntity);
 
-    //@Mapping(target = "userStoryId", source = "userStoryId")
-    //@Mapping(target = "name", source = "name")
-    //@Mapping(target = "description", source = "description")
-    //@Mapping(target = "storyPoints", source = "storyPoints")
+    @Mapping(target = "userStoryId", source = "userStoryId")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "description", source = "description")
+    @Mapping(target = "storyPoints", source = "storyPoints")
     UserStory userStoryEntityToUserStory(UserStoryEntity userStoryEntity);
 
 
-    //@Mapping(target = "userStoryId", ignore = true)
-    //@Mapping(target = "name", source = "name")
-    //@Mapping(target = "description", source = "description")
-    //@Mapping(target = "storyPoints", source = "storyPoints")
+    @Mapping(target = "userStoryId", ignore = true)
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "description", source = "description")
+    @Mapping(target = "storyPoints", source = "storyPoints")
     UserStoryEntity userStoryToUserStoryEntity(UserStory userStory);
 
 }

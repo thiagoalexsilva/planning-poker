@@ -40,6 +40,19 @@ class UserStoryServiceTest {
     }
 
     @Test
+    void getAllUserStories_USExistsNoStatus_ReturnsList(){
+        final var userStoryEntityList = List.of(new UserStoryEntity());
+        final var userStory = new UserStory();
+
+        Mockito.when(this.userStoryRepository.findAll()).thenReturn(userStoryEntityList);
+        Mockito.when(this.mapper.userStoryEntityToUserStory(Mockito.any(UserStoryEntity.class))).thenReturn(userStory);
+
+        final var response = this.userStoryService.getAllUserStories(null);
+
+        Assertions.assertFalse(response.isEmpty());
+    }
+
+    @Test
     void getAllUserStories_USNotExists_ReturnsEmptyList(){
 
         Mockito.when(this.userStoryRepository.findALLByStatus(Mockito.anyString())).thenReturn(List.of());

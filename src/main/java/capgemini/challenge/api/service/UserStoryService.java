@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserStoryService implements IUserStoryService {
@@ -24,11 +25,16 @@ public class UserStoryService implements IUserStoryService {
         this.mapper = mapper;
     }
 
-
     @Override
     public List<UserStory> getAllUserStories(String status) {
         ArrayList<UserStory> userStories = new ArrayList<>();
-        List<UserStoryEntity> userStoryEntities = this.userStoryRepository.findALLByStatus(status);
+        ArrayList<UserStoryEntity> userStoryEntities = new ArrayList<>();
+
+        if(Objects.isNull(status)){
+            userStoryEntities.addAll(this.userStoryRepository.findAll());
+        } else {
+            userStoryEntities.addAll(this.userStoryRepository.findALLByStatus(status));
+        }
 
         if(!userStoryEntities.isEmpty()) {
             userStoryEntities.forEach(userStoryEntity -> userStories.add(this.mapper.userStoryEntityToUserStory(userStoryEntity)));
