@@ -6,6 +6,7 @@ import capgemini.challenge.api.mapper.MapStructMapper;
 import capgemini.challenge.api.model.UserEntity;
 import capgemini.challenge.api.model.UserStoryEntity;
 import capgemini.challenge.api.repository.IUserRepository;
+import capgemini.challenge.api.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

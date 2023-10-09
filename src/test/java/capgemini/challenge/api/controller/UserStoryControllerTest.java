@@ -2,6 +2,7 @@ package capgemini.challenge.api.controller;
 
 import capgemini.api.openapi.dto.UserStory;
 import capgemini.api.openapi.dto.UserStoryStatusEnum;
+import capgemini.challenge.api.controller.UserStoryController;
 import capgemini.challenge.api.service.UserStoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

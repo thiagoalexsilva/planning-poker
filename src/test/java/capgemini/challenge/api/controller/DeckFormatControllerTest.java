@@ -1,6 +1,7 @@
 package capgemini.challenge.api.controller;
 
 import capgemini.api.openapi.dto.DeckFormat;
+import capgemini.challenge.api.controller.DeckFormatController;
 import capgemini.challenge.api.service.DeckFormatService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

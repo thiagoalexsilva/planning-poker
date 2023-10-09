@@ -2,6 +2,7 @@ package capgemini.challenge.api.controller;
 
 import capgemini.api.openapi.dto.Session;
 import capgemini.api.openapi.dto.User;
+import capgemini.challenge.api.controller.SessionController;
 import capgemini.challenge.api.service.SessionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,7 @@
 package capgemini.challenge.api.controller;
 
 import capgemini.api.openapi.dto.User;
+import capgemini.challenge.api.controller.UserController;
 import capgemini.challenge.api.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

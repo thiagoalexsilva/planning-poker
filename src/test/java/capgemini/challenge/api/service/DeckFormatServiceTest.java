@@ -5,6 +5,7 @@ import capgemini.challenge.api.mapper.MapStructMapper;
 import capgemini.challenge.api.mapper.MapStructMapperImpl;
 import capgemini.challenge.api.model.DeckFormatEntity;
 import capgemini.challenge.api.repository.IDeckFormatRepository;
+import capgemini.challenge.api.service.DeckFormatService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

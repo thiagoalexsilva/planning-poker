@@ -5,6 +5,7 @@ import capgemini.challenge.api.exception.PlanningPokerException;
 import capgemini.challenge.api.mapper.MapStructMapper;
 import capgemini.challenge.api.model.UserStoryEntity;
 import capgemini.challenge.api.repository.IUserStoryRepository;
+import capgemini.challenge.api.service.UserStoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

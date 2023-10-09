@@ -7,6 +7,9 @@ import capgemini.challenge.api.exception.PlanningPokerException;
 import capgemini.challenge.api.mapper.MapStructMapper;
 import capgemini.challenge.api.model.SessionEntity;
 import capgemini.challenge.api.repository.ISessionRepository;
+import capgemini.challenge.api.service.SessionService;
+import capgemini.challenge.api.service.UserService;
+import capgemini.challenge.api.service.UserStoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -205,6 +208,22 @@ class SessionServiceTest {
         final var response = spyTemp.uploadSessionUser(1L, user);
 
         Assertions.assertNotNull(response);
+    }
+
+    @Test
+    void uploadSessionUser_PlayerAlreadyExistsAtList_ThrowsException(){
+        Session sessionMock = new Session();
+        User user = new User()
+                .userId(2L)
+                .name("Test");
+        sessionMock.setPlayers(List.of(new User()
+                .userId(2L)
+                .name("Test")));
+        SessionService spyTemp = Mockito.spy(sessionService);
+
+        Mockito.doReturn(sessionMock).when(spyTemp).getSessionById(Mockito.anyLong());
+
+        Assertions.assertThrows(PlanningPokerException.class, () -> spyTemp.uploadSessionUser(1L, user));
     }
 
     @Test

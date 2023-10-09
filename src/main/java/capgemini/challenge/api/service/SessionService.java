@@ -113,9 +113,10 @@ public class SessionService implements ISessionService {
     public Session uploadSessionUser(Long sessionId, User user) {
         Session session = this.getSessionById(sessionId);
         String userName = user.getName();
+        Long userId = user.getUserId();
         List<User> userPlayerList = session.getPlayers()
                 .stream()
-                .filter(player -> player.getName().equals(userName))
+                .filter(player -> player.getName().equals(userName) && player.getUserId().equals(userId))
                 .toList();
 
         if(!userPlayerList.isEmpty()){
